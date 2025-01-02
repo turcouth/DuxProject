@@ -24,13 +24,17 @@ contract MockVerifier is IVerifier {
     /**
      * @notice Vérifie une preuve ZK simulée
      * @dev Retourne toujours la valeur définie dans shouldVerify
-     * @param proof Les données de la preuve (non utilisées dans le mock)
-     * @param input Les entrées publiques (non utilisées dans le mock)
+     * @param _pA Premier élément de la preuve (point G1)
+     * @param _pB Deuxième élément de la preuve (point G2)
+     * @param _pC Troisième élément de la preuve (point G1)
+     * @param _pubSignals Signaux publics de la preuve
      * @return bool Retourne shouldVerify, simulant la validation ou le rejet
      */
     function verifyProof(
-        bytes memory proof,
-        uint256[] memory input
+        uint256[2] memory _pA,
+        uint256[2][2] memory _pB,
+        uint256[2] memory _pC,
+        uint256[3] memory _pubSignals
     ) external view override returns (bool) {
         return shouldVerify;
     }

@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 import "./managers/FeeManager.sol";
 import "./managers/RateLimiter.sol";
 import "./managers/AgeVerificationManager.sol";
@@ -22,6 +23,7 @@ contract AgeSBT is
     ERC721,
     ERC721Burnable,
     ReentrancyGuard,
+    Pausable,
     AgeVerificationManager,
     ProofValidator,
     SecurityManager,
@@ -32,6 +34,14 @@ contract AgeSBT is
 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+
+    /// @notice Émis lorsqu'un nouveau token est créé
+    /// @param to Adresse du destinataire
+    /// @param tokenId Identifiant du token créé
+    event TokenMinted(address indexed to, uint256 indexed tokenId);
 
     /// @notice Initialise le contrat AgeSBT
     /// @dev Configure les paramètres initiaux pour la vérification et la gestion des frais
@@ -46,11 +56,14 @@ contract AgeSBT is
         ERC721("Age Verification SBT", "AVSBT")
         FeeManager(_verificationFee, _feeReceiver)
         AgeVerificationManager(_verifier)
-        SecurityManager()
+        SecurityManager(address(this), address(this))
         AccessController()
         TokenGuard()
         ProofValidator()
     {
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(MINTER_ROLE, msg.sender);
+        _setupRole(PAUSER_ROLE, msg.sender);
     }
 
     /// @notice Valide une preuve ZK
@@ -149,8 +162,22 @@ contract AgeSBT is
         address to,
         uint256 tokenId,
         uint256 batchSize
-    ) internal virtual override(ERC721, TokenGuard) whenNotPaused {
+    ) internal virtual override(ERC721) whenNotPaused {
         require(from == address(0) || to == address(0), "AgeSBT: Token transfer is not allowed");
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
+    /// @notice Vérifie si le contrat supporte une interface donnée
+    /// @dev Implémentation de ERC165
+    /// @param interfaceId ID de l'interface à vérifier
+    /// @return bool Vrai si l'interface est supportée
+    function supportsInterface(bytes4 interfaceId) 
+        public 
+        view 
+        virtual 
+        override(ERC721, AccessControl) 
+        returns (bool) 
+    {
+        return super.supportsInterface(interfaceId);
     }
 } 
