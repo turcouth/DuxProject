@@ -38,6 +38,6 @@ debug/
 cache-zk/
 
 # Documentation files
-CDC.mg
+CDC.md
 ETAPES_PROJET.md
 backend/UPDATE_PROJET.md 
