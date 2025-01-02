@@ -1,0 +1,40 @@
+{
+  "basic_tests": {
+    "adult_person": {
+      "birthTimestamp": 946684800,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    },
+    "minor_person": {
+      "birthTimestamp": 1072915200,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    }
+  },
+  "edge_cases": {
+    "exactly_18": {
+      "birthTimestamp": 1136073600,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    },
+    "almost_18": {
+      "birthTimestamp": 1136160000,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    }
+  },
+  "leap_year_cases": {
+    "born_leap_day": {
+      "birthTimestamp": 951782400,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    }
+  },
+  "robustness_tests": {
+    "very_old": {
+      "birthTimestamp": -1577923200,
+      "currentTimestamp": 1703862000,
+      "minAgeInSeconds": 567648000
+    }
+  }
+} 

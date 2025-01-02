@@ -1,0 +1,34 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:minimal": "npx hardhat test --config hardhat.test.config.js",
+    "test": "npx hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "node scripts/deploy.js",
+    "test:circuits": "cd circuits/age_verification/tests && ./run_tests.sh",
+    "test:all": "npm run test && npm run test:circuits"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/test-helpers": "^0.5.16",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.17.0"
+  },
+  "dependencies": {
+    "circomlib": "^2.0.5",
+    "dotenv": "^16.3.1",
+    "snarkjs": "^0.7.5",
+    "zksync-web3": "^0.17.1",
+    "zokrates-js": "^1.1.8"
+  }
+}

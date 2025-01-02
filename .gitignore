@@ -1,0 +1,43 @@
+# Dépendances
+node_modules/
+.env
+
+# Fichiers de build
+artifacts/
+artifacts-zk/
+cache/
+typechain/
+typechain-types/
+
+# Fichiers système
+.DS_Store
+*.swp
+*.swo
+
+# Fichiers de test et de couverture
+coverage/
+coverage.json
+
+# Fichiers de déploiement
+deployments/
+
+# Fichiers de debug
+debug/
+
+# Fichiers temporaires
+*.log
+*.tmp
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Hardhat
+cache-zk/
+
+# Documentation files
+CDC.mg
+ETAPES_PROJET.md
+backend/UPDATE_PROJET.md 
